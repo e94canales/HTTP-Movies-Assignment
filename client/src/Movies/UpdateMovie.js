@@ -11,7 +11,6 @@ const initialMovie = {
 
 const UpdateMovie = props => {
     const { setMovieList } = props
-
     const [movie, setMovie ] = useState(initialMovie)
     const [ updating, setUpdating ] = useState(false)
     const params = useParams()
