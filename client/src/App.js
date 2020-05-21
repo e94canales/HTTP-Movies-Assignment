@@ -4,6 +4,8 @@ import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
 import axios from 'axios';
+import UpdateMovie from './Movies/UpdateMovie'
+import AddMovie from './Movies/AddMovie'
 
 const App = () => {
   const [savedList, setSavedList] = useState([]);
@@ -11,8 +13,11 @@ const App = () => {
 
   const getMovieList = () => {
     axios
-      .get("http://localhost:5000/api/movies")
-      .then(res => setMovieList(res.data))
+      .get("http://localhost:3333/api/movies")
+      .then(res => {
+        setMovieList(res.data) 
+        // console.log(res)
+      })
       .catch(err => console.log(err.response));
   };
 
@@ -32,8 +37,20 @@ const App = () => {
         <MovieList movies={movieList} />
       </Route>
 
+      <Route 
+        exact 
+        path='/add-movie'
+        render={props => <AddMovie {...props} setMovieList={setMovieList}/>} />
+
+      <Route 
+        exact 
+        path='/update-movie/:id'
+        render={props => <UpdateMovie {...props} setMovieList={setMovieList} movieList={movieList}/>} />
+        
+      
+
       <Route path="/movies/:id">
-        <Movie addToSavedList={addToSavedList} />
+        <Movie addToSavedList={addToSavedList} setMovieList={setMovieList}/>
       </Route>
     </>
   );
